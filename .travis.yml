@@ -1,0 +1,54 @@
+sudo: false
+
+language: go
+
+services:
+  - docker
+
+go:
+  - 1.6
+
+branches:
+  only:
+    - master
+    - develop
+
+install:
+  - export GO15VENDOREXPERIMENT=1
+  - go get github.com/Masterminds/glide
+  - go get github.com/go-playground/overalls
+  - go get github.com/mattn/goveralls
+  - if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
+  - $GOPATH/bin/glide install
+
+script:
+  - go test -v $($GOPATH/bin/glide novendor)
+  - $GOPATH/bin/overalls -project=github.com/${TRAVIS_REPO_SLUG} -covermode=count -ignore=.git,vendor,build -debug
+  - go build -race $($GOPATH/bin/glide novendor)
+  - VPKG="github.com/${TRAVIS_REPO_SLUG}/version"
+  - BUILD_VERSION=$(head -n 1 .semver)
+  - CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-X ${VPKG}.Version=${BUILD_VERSION} -X ${VPKG}.Commit=${TRAVIS_COMMIT} -X ${VPKG}.Branch=${TRAVIS_BRANCH}" -o deploy/artifacts/urban-gopher-$BUILD_VERSION
+
+after_success:
+  - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci
+
+before_deploy:
+  - cp .semver deploy/artifacts/
+  - openssl aes-256-cbc -K $encrypted_a20232c65bfb_key -iv $encrypted_a20232c65bfb_iv -in deploy/deploy_key.enc -out ~/.ssh/id_rsa -d
+  - chmod 400 ~/.ssh/id_rsa
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: deploy/dockerize.sh
+    on:
+      branch: master
+  - provider: script
+    skip_cleanup: true
+    script: deploy/dockerize.sh dev
+    on:
+      branch: develop
+
+after_deploy:
+  - deploy/update_develop_version.sh
+  - sudo rm ~/.ssh/id_rsa
