@@ -40,9 +40,9 @@ echo "Building docker image $DOCKER_IMAGE_NAME"
 docker build -t $DOCKER_IMAGE_NAME $DIR
 
 # Only push if the env variables are set
-if [ ! -z $DOCKER_EMAIL ] && [ ! -z $DOCKER_USER ] && [ ! -z $DOCKER_PASSWORD ]; then
+if [ ! -z $DOCKER_USER ] && [ ! -z $DOCKER_PASSWORD ]; then
   echo "Logging in to dockerhub"
-  docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
+  docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
   echo "Pushing $DOCKER_IMAGE_NAME"
   docker push $DOCKER_IMAGE_NAME
 

@@ -22,9 +22,8 @@ install:
   - $GOPATH/bin/glide install
 
 script:
-  - go test -v $($GOPATH/bin/glide novendor)
-  - $GOPATH/bin/overalls -project=github.com/${TRAVIS_REPO_SLUG} -covermode=count -ignore=.git,vendor,build -debug
-  - go build -race $($GOPATH/bin/glide novendor)
+  - go test -v -race $($GOPATH/bin/glide novendor)
+  - $GOPATH/bin/overalls -project=github.com/${TRAVIS_REPO_SLUG} -covermode=count -ignore=.git,vendor,deploy -debug
   - VPKG="github.com/${TRAVIS_REPO_SLUG}/version"
   - BUILD_VERSION=$(head -n 1 .semver)
   - CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-X ${VPKG}.Version=${BUILD_VERSION} -X ${VPKG}.Commit=${TRAVIS_COMMIT} -X ${VPKG}.Branch=${TRAVIS_BRANCH}" -o deploy/artifacts/urban-gopher-$BUILD_VERSION
@@ -52,3 +51,7 @@ deploy:
 after_deploy:
   - deploy/update_develop_version.sh
   - sudo rm ~/.ssh/id_rsa
+
+notifications:
+  slack:
+    secure: yyoesM6sJtJmPm1BZw6OZp7f6rWYjrcuSwRIBzqa+Abr5a53OOcIef88mYOS8LoVtl3mZK5ons2vxk75f0ReulseuLYvSFtmnCoThfvxxw9Tse0odPcYC/n7tIajAp/AfwfBzmdCmGWlvwvSfV0PP/ynBY5TwING3HzG2H+cisfZOza27D9/s1ACruIraz/rDSMixKfeougYAOg4mOaMnobKAPHNbSIk11HkW8A7Xtxynr4jLQT/MkvRoRi+cVRmAR9+6WtIStigguKkjFvZQ4pQxgQ7ZRjOl1vmQKln/dLcD58eXQjs8CWOB7aVEKAUeoH+4a6jxbtVIpb4E2tbaHfwRJO8A3UDRztmWKcp1beb1kGJ9PJg4N7njCv+uf93Kvq5VO2bh8UOdi8tPnILGP+QwUKLd44I1CI6ef5XI/zsg7m0rCIh1KxLm4ngdBRpd1nP321woJev7kK+DwOSd57zyAyRXTZNh/8P7SYPgwUhLEIzJ96AaF9BaWTgrZ6pTrpR/j7Do/8jYy7ZgyZS+x7OUhm9Soia1iZsJ96g7NfKVvOxQ8I7702Uu0tHCTKtqAV9/Yi+ZLBWbz+lhhRMU7+Jfz5FXU7e8keAZbg1stPTEeJLImajVZge5lURFZe0yDR72fqSYKB4itrijOb6hEC0Au3yR9c8culvM5jWYds=
