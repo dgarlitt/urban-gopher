@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/dgarlitt/urban-gopher.svg)](https://travis-ci.org/dgarlitt/urban-gopher)
 [![Coverage Status](https://coveralls.io/repos/github/dgarlitt/urban-gopher/badge.svg?branch=master)](https://coveralls.io/github/dgarlitt/urban-gopher?branch=master)
 
+![Urban Gopher Logo](https://raw.githubusercontent.com/dgarlitt/image-repo/master/urban-gopher/urban-gopher-art.jpg)
+
 # Urban Dictionary Definition Lookup Service
 
 This is a simple service that will look-up the "best" definition for a given term
@@ -23,5 +25,3 @@ cd $GOPATH/src/github.com/dgarlitt/urban-gopher
 go build -v -race -o deploy/artifacts/urban-gopher
 deploy/artifacts/urban-gopher
 ```
-
-![Golang Gopher Logo](https://raw.githubusercontent.com/dgarlitt/image-repo/master/tech-logos/golang-gopher.png)
