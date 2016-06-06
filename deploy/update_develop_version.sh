@@ -7,7 +7,7 @@ if [ $TRAVIS_BRANCH = "master" ] && [ $TRAVIS_PULL_REQUEST = "false" ]; then
   echo "Checking out the develop branch"
   git checkout -b develop
 
-  echo "Updateing the version file"
+  echo "Updating the version file"
   cat .semver | awk 'BEGIN { FS="."; OFS="."; } { print $1,$2,++$3 > ".semver" }'
 
   echo "Adding version file to index"
