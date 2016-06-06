@@ -53,5 +53,10 @@ after_deploy:
   - sudo rm ~/.ssh/id_rsa
 
 notifications:
+  email:
+    recipients:
+      - teamurbangopher@gmail.com
+    on_success: change
+    on_failure: always
   slack:
     secure: yyoesM6sJtJmPm1BZw6OZp7f6rWYjrcuSwRIBzqa+Abr5a53OOcIef88mYOS8LoVtl3mZK5ons2vxk75f0ReulseuLYvSFtmnCoThfvxxw9Tse0odPcYC/n7tIajAp/AfwfBzmdCmGWlvwvSfV0PP/ynBY5TwING3HzG2H+cisfZOza27D9/s1ACruIraz/rDSMixKfeougYAOg4mOaMnobKAPHNbSIk11HkW8A7Xtxynr4jLQT/MkvRoRi+cVRmAR9+6WtIStigguKkjFvZQ4pQxgQ7ZRjOl1vmQKln/dLcD58eXQjs8CWOB7aVEKAUeoH+4a6jxbtVIpb4E2tbaHfwRJO8A3UDRztmWKcp1beb1kGJ9PJg4N7njCv+uf93Kvq5VO2bh8UOdi8tPnILGP+QwUKLd44I1CI6ef5XI/zsg7m0rCIh1KxLm4ngdBRpd1nP321woJev7kK+DwOSd57zyAyRXTZNh/8P7SYPgwUhLEIzJ96AaF9BaWTgrZ6pTrpR/j7Do/8jYy7ZgyZS+x7OUhm9Soia1iZsJ96g7NfKVvOxQ8I7702Uu0tHCTKtqAV9/Yi+ZLBWbz+lhhRMU7+Jfz5FXU7e8keAZbg1stPTEeJLImajVZge5lURFZe0yDR72fqSYKB4itrijOb6hEC0Au3yR9c8culvM5jWYds=
