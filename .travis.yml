@@ -12,6 +12,7 @@ branches:
   only:
     - master
     - develop
+    - /^fb-\d+$/
 
 install:
   - export GO15VENDOREXPERIMENT=1
@@ -23,33 +24,33 @@ install:
 
 script:
   - go test -v -race $($GOPATH/bin/glide novendor)
-  - $GOPATH/bin/overalls -project=github.com/${TRAVIS_REPO_SLUG} -covermode=count -ignore=.git,vendor,deploy -debug
+  - $GOPATH/bin/overalls -project=github.com/${TRAVIS_REPO_SLUG} -covermode=count -ignore=.git,vendor,ci -debug
   - VPKG="github.com/${TRAVIS_REPO_SLUG}/version"
   - BUILD_VERSION=$(head -n 1 .semver)
-  - CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-X ${VPKG}.Version=${BUILD_VERSION} -X ${VPKG}.Commit=${TRAVIS_COMMIT} -X ${VPKG}.Branch=${TRAVIS_BRANCH}" -o deploy/artifacts/urban-gopher-$BUILD_VERSION
+  - CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-X ${VPKG}.Version=${BUILD_VERSION} -X ${VPKG}.Commit=${TRAVIS_COMMIT} -X ${VPKG}.Branch=${TRAVIS_BRANCH}" -o ci/artifacts/urban-gopher-$BUILD_VERSION
 
 after_success:
   - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci
 
 before_deploy:
-  - cp .semver deploy/artifacts/
-  - openssl aes-256-cbc -K $encrypted_a20232c65bfb_key -iv $encrypted_a20232c65bfb_iv -in deploy/deploy_key.enc -out ~/.ssh/id_rsa -d
+  - cp .semver ci/artifacts/
+  - openssl aes-256-cbc -K $encrypted_a20232c65bfb_key -iv $encrypted_a20232c65bfb_iv -in ci/deploy_key.enc -out ~/.ssh/id_rsa -d
   - chmod 400 ~/.ssh/id_rsa
 
 deploy:
   - provider: script
     skip_cleanup: true
-    script: deploy/dockerize.sh
+    script: ci/dockerize.sh
     on:
       branch: master
   - provider: script
     skip_cleanup: true
-    script: deploy/dockerize.sh dev
+    script: ci/dockerize.sh dev
     on:
       branch: develop
 
 after_deploy:
-  - deploy/update_develop_version.sh
+  - ci/update_develop_version.sh
   - sudo rm ~/.ssh/id_rsa
 
 notifications:
