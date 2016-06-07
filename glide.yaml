@@ -1,13 +1,11 @@
 package: github.com/dgarlitt/urban-gopher
 import:
 - package: github.com/gorilla/context
-  version: 1c83b3eabd45b6d76072b66b746c20815fb2872d
+  version: 1.1
 - package: github.com/gorilla/mux
-  version: 26a6070f849969ba72b72256e9f14cf519751690
-- package: github.com/hoisie/mustache
-  version: af524a16a1b1bd467c342969bf37db23433466c4
+  version: 1.1
 - package: github.com/stretchr/testify
-  version: 232e8563676cd15c3a36ba5e675ad4312ac4cb11
+  version: 1.1.3
   subpackages:
   - assert
   - require
