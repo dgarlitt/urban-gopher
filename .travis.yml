@@ -23,6 +23,8 @@ install:
   - $GOPATH/bin/glide install
 
 script:
+  - if [ $(go fmt $($GOPATH/bin/glide novendor) | wc -l) -gt 0 ]; then echo "Files incorrectly formatted" && exit 1; fi
+  - go vet -x $($GOPATH/bin/glide novendor)
   - go test -v -race $($GOPATH/bin/glide novendor)
   - $GOPATH/bin/overalls -project=github.com/${TRAVIS_REPO_SLUG} -covermode=count -ignore=.git,vendor,ci -debug
   - VPKG="github.com/${TRAVIS_REPO_SLUG}/version"
