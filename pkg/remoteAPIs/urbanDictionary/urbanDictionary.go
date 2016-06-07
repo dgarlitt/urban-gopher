@@ -19,6 +19,7 @@ type DefinitionProvider struct{}
 // from the list of definitions returned by the remote api.
 func (provider *DefinitionProvider) LookupDefinition(params *types.ProviderParams) (definition *types.Definition, err error) {
 	definition = &types.Definition{}
+
 	c := make(chan *DictionaryResults, 1)
 	go fetchDefinitions(params, c)
 	results := <-c
