@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/dgarlitt/urban-gopher.svg)](https://travis-ci.org/dgarlitt/urban-gopher)
 [![Coverage Status](https://coveralls.io/repos/github/dgarlitt/urban-gopher/badge.svg?branch=master)](https://coveralls.io/github/dgarlitt/urban-gopher?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dgarlitt/urban-gopher)](https://goreportcard.com/report/github.com/dgarlitt/urban-gopher)
 
 ![Urban Gopher Logo](https://raw.githubusercontent.com/dgarlitt/image-repo/master/urban-gopher/urban-gopher-art.jpg)
 
