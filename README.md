@@ -19,7 +19,7 @@ export URBAN_GOPHER_API_KEY=<your-mashape-api-key>
 Then you can startup the service and hit the endpoint as follows:
 
 ```
-curl http://localhost:8008/define?term=wat
+curl http://localhost:8008/definition?term=wat
 ```
 
 Alternatively, you can provide the API key as a header when making a request:
@@ -27,7 +27,7 @@ Alternatively, you can provide the API key as a header when making a request:
 Example request:
 
 ```
-curl -H "X-API-Key: <your-mashape-api-key>" http://localhost:8008/define?term=wat
+curl -H "X-API-Key: <your-mashape-api-key>" http://localhost:8008/definition?term=wat
 ```
 
 Mashape API keys will not be logged in the log output.

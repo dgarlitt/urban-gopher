@@ -16,7 +16,7 @@ func SetupRoutes() *mux.Router {
 
 	router.HandleFunc("/health", healthHandler)
 
-	router.HandleFunc("/define", DefinitionHandlerProvider.definitionHandler)
+	router.HandleFunc("/definition", DefinitionHandlerProvider.definitionHandler)
 
 	http.Handle("/", router)
 

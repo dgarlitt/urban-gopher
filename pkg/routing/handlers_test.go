@@ -62,7 +62,7 @@ func (suite *HandlersTestSuite) TestIndexHandlerResponse() {
 }
 
 func (suite *HandlersTestSuite) TestDictionaryHandlerResponse() {
-	request, _ := http.NewRequest("GET", "/define?term=Bob+Dole", nil)
+	request, _ := http.NewRequest("GET", "/definition?term=Bob+Dole", nil)
 	request.Header.Set("X-API-Key", "bobloblaw")
 	response := httptest.NewRecorder()
 
@@ -81,7 +81,7 @@ func (suite *HandlersTestSuite) TestDictionaryHandlerResponse() {
 }
 
 func (suite *HandlersTestSuite) TestDictionaryHandlerResponseWithoutEnvAPIKey() {
-	request, _ := http.NewRequest("GET", "/define?term=Bob+Dole", nil)
+	request, _ := http.NewRequest("GET", "/definition?term=Bob+Dole", nil)
 	response := httptest.NewRecorder()
 
 	expectedResponseCode := http.StatusBadRequest
